@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useCallback } from "react";
+import { workerInstance, blockingFunc, randomIntFromInterval } from "./utils";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [random, setRandom] = useState(0);
+  const workerCall = useCallback(async () => {
+    await workerInstance.someRPCFunc();
+  }, []);
+
+  const normalFuncCall = useCallback(() => {
+    blockingFunc();
+  }, []);
+
+  const randomIntHandler = useCallback(() => {
+    setRandom(randomIntFromInterval(1, 100));
+  }, []);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div>simple web worker app in vite</div>
+      <section>
+        <button onClick={workerCall}>worker call</button>
+        <button onClick={normalFuncCall}>Main thread call</button>
+        <button onClick={randomIntHandler}>Random Int {random} </button>
+      </section>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
