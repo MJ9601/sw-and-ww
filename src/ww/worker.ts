@@ -1,9 +1,9 @@
 /// <reference lib="webworker" />
 
-declare const self: DedicateWorkerGlobalScope;
+// declare const self: DedicatedWorkerGlobalScope;
 
-import { blockingFunc } from "../utils";
+// import { blockingFunc } from "../utils";
 
-export const someRPCFunc = () => {
-  blockingFunc();
-};
+// export const someRPCFunc = () => {
+//   blockingFunc();
+// };
